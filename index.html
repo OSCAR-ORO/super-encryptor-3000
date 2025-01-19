@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap"
+      rel="stylesheet"
+    />
+    <title>SuperEncryptor 3000</title>
+    <style>
+      h1 {
+        font-family: "Audiowide", sans-serif;
+        & i {
+          font-size: 2em;
+        }
+      }
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 50px;
+        background-color: #f4f4f4;
+      }
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+      footer {
+        bottom: 1%;
+        left: 0;
+        width: 100%;
+        margin-bottom: 20px;
+        /* border: 2px solid black; */
+        & p {
+          font-size: 14px;
+          font-family: Arial, sans-serif;
+          margin: 7px 0;
+        }
+        text-align: center;
+        padding: 10px;
+        font-size: 14px;
+        font-family: Arial, sans-serif;
+      }
+      textarea {
+        width: 80%;
+        height: 100px;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        resize: none;
+      }
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: white;
+      }
+      #copyButton {
+        background-color: transparent;
+        border: 2px solid #007bff;
+        color: #007bff;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>SuperEncryptor <i>3000</i></h1>
+    <div class="container">
+      <textarea id="inputText" placeholder="Enter text here..."></textarea>
+      <button onclick="processText()">Encrypt</button>
+      <textarea
+        id="outputText"
+        readonly
+        placeholder="Output will appear here..."
+      ></textarea>
+      <button id="copyButton" onclick="copyToClipboard()">Copy</button>
+      <button onclick="toggleMode()">Switch to Decrypt Mode</button>
+    </div>
+    <footer>
+      <p>© 2025 SuperEncryptor 3000 | Made with 😆 by</p>
+      <a href="https://x.com/OSCAR_ORO_" target="_blank"
+        ><strong> Oscar Oro</strong></a
+      >
+    </footer>
+    <script>
+      let isEncryptMode = true;
+
+      function processText() {
+        const input = document.getElementById("inputText").value;
+        const output = isEncryptMode ? encrypt(input) : decrypt(input);
+        document.getElementById("outputText").value = output;
+      }
+
+      function copyToClipboard() {
+        const output = document.getElementById("outputText");
+        output.select();
+        document.execCommand("copy");
+        alert("Copied to clipboard!");
+      }
+
+      function toggleMode() {
+        isEncryptMode = !isEncryptMode;
+        document.querySelector("button").textContent = isEncryptMode
+          ? "Encrypt"
+          : "Decrypt";
+        document.querySelector("button:last-child").textContent = isEncryptMode
+          ? "Switch to Decrypt Mode"
+          : "Switch to Encrypt Mode";
+        document.getElementById("outputText").value = "";
+      }
+
+      function encrypt(input) {
+        return input.replace(
+          /(a)|(e)|(i)|(o)|(u)|(y)/gi,
+          (match, p1, p2, p3, p4, p5, p6) =>
+            p1
+              ? "$1"
+              : p2
+              ? "$2"
+              : p3
+              ? "$3"
+              : p4
+              ? "$4"
+              : p5
+              ? "$5"
+              : p6
+              ? "$6"
+              : ""
+        );
+      }
+
+      function decrypt(input) {
+        return input.replace(/\$1|\$2|\$3|\$4|\$5|\$6/gi, (match) =>
+          match === "$1"
+            ? "a"
+            : match === "$2"
+            ? "e"
+            : match === "$3"
+            ? "i"
+            : match === "$4"
+            ? "o"
+            : match === "$5"
+            ? "u"
+            : match === "$6"
+            ? "y"
+            : ""
+        );
+      }
+    </script>
+  </body>
+</html>
